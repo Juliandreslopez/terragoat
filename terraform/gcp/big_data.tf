@@ -13,7 +13,7 @@ resource "google_sql_database_instance" "master_instance" {
       }
     }
     backup_configuration {
-      enabled = false
+      enabled = true
     }
   }
 }
@@ -33,5 +33,6 @@ resource "google_bigquery_dataset" "dataset" {
     git_org              = "Juliandreslopez"
     git_repo             = "terragoat"
     yor_trace            = "2560d883-bc3a-4cb6-b9fc-fb666edf626e"
+    yor_name             = "dataset"
   }
 }
