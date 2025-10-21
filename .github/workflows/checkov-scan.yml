@@ -28,3 +28,10 @@ jobs:
       with:
         api-key: ${{ secrets.PCC_USER }}::${{ secrets.PCC_PASS }}
         use_enforcement_rules: true
+        output: junitxml
+        output_file_path: checkov_report.xml # Name of the JUnit XML report file
+    - name: Upload Checkov Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: checkov-junit-report
+        path: checkov_report.xml
