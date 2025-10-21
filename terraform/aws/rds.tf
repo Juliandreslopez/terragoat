@@ -125,6 +125,7 @@ resource "aws_rds_cluster" "app8-rds-cluster" {
     yor_trace            = "af643747-0967-4251-8645-3b54882c2507"
 
   }
+  copy_tags_to_snapshot = true
 }
 
 resource "aws_rds_cluster" "app9-rds-cluster" {
