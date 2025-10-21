@@ -33,7 +33,7 @@ jobs:
       id: checkov
       run: |
         pip install jq checkov
-        checkov -d . --bc-api-key ${{ secrets.PCC_USER }}::${{ secrets.PCC_PASS }} --use-enforcement-rules --branch master --repo-id Juliandreslopez/terragoat --output json > checkov_report.json
+        checkov -d . --prisma-api-url ${{ secrets.PCCS_CONSOLE_URL }} --bc-api-key ${{ secrets.PCC_USER }}::${{ secrets.PCC_PASS }} --use-enforcement-rules --branch master --repo-id Juliandreslopez/terragoat --output json > checkov_report.json
         echo "## 🛡️ Checkov Scan Summary" >> $GITHUB_STEP_SUMMARY
         jq -r '
           .summary | 
