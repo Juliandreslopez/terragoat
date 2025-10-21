@@ -8,7 +8,7 @@ name: PC - Code Scan
 
 jobs:
   deploy:
-    name: EKS - Build, Scan and Deploy
+    name: PC - Code Scan
     runs-on: ubuntu-latest
     
     permissions:
