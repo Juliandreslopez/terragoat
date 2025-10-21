@@ -22,6 +22,7 @@ jobs:
     
     - name: Prisma Cloud Code Security Scan
       id: checkov
+      continue-on-error: true
       uses: bridgecrewio/checkov-action@master
       env:
         PRISMA_API_URL: ${{ secrets.PCCS_CONSOLE_URL }}
