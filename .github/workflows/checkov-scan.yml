@@ -29,7 +29,7 @@ jobs:
         api-key: ${{ secrets.PCC_USER }}::${{ secrets.PCC_PASS }}
         directory: terragoat/terraform
         use_enforcement_rules: true
-        output_format: sarif
+        output_format: cli,sarif
         output_file_path: checkov_report.sarif
         
     - name: Upload SARIF file to GitHub Code Scanning
