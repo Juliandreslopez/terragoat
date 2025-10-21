@@ -17,25 +17,21 @@ jobs:
     
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3   
       
-    
-    # - name: Prisma Cloud Code Security Scan
-    #   id: checkov
-    #   uses: bridgecrewio/checkov-action@master
-    #   env:
-    #     PRISMA_API_URL: ${{ secrets.PCCS_CONSOLE_URL }}
-    #   with:
-    #     api-key: ${{ secrets.PCC_USER }}::${{ secrets.PCC_PASS }}
-    #     use_enforcement_rules: true
-
-    - name: Run Checkov and format JSON summary
+    - name: Prisma Cloud Code Security Scan
       id: checkov
-      run: |
-        pip install jq checkov
-        checkov -d . --prisma-api-url ${{ secrets.PCCS_CONSOLE_URL }} --bc-api-key ${{ secrets.PCC_USER }}::${{ secrets.PCC_PASS }} --use-enforcement-rules --branch master --repo-id Juliandreslopez/terragoat --output json > checkov_report.json
-        echo "## 🛡️ Checkov Scan Summary" >> $GITHUB_STEP_SUMMARY
-        jq -r '
-          .summary | 
-          "✅ Passed: \(.passed)\n❌ Failed: \(.failed)\n⚠️ Skipped: \(.skipped)\n\nDetails:\n" 
-        ' checkov_report.json >> $GITHUB_STEP_SUMMARY
+      uses: bridgecrewio/checkov-action@master
+      env:
+        PRISMA_API_URL: ${{ secrets.PCCS_CONSOLE_URL }}
+      with:
+        api-key: ${{ secrets.PCC_USER }}::${{ secrets.PCC_PASS }}
+        use_enforcement_rules: true
+        output_format: cli,sarif
+        output_file_path: checkov_report.sarif
+        
+    - name: Upload SARIF file to GitHub Code Scanning
+      if: always()
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: checkov_report.sarif
