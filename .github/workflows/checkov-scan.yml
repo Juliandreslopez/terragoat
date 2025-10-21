@@ -4,7 +4,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-name: EKS - Build, Scan and Deploy
+name: PC - Code Scan
 
 jobs:
   deploy:
