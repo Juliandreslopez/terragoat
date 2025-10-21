@@ -22,7 +22,6 @@ jobs:
     
     - name: Prisma Cloud Code Security Scan
       id: checkov
-      continue-on-error: true
       uses: bridgecrewio/checkov-action@master
       env:
         PRISMA_API_URL: ${{ secrets.PCCS_CONSOLE_URL }}
@@ -31,9 +30,4 @@ jobs:
         use_enforcement_rules: true
         output: junitxml
         output_file_path: checkov_report.xml # Name of the JUnit XML report file
-    - name: Upload Checkov Report
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: checkov-junit-report
-        path: checkov_report.xml
+        upload-results: true
