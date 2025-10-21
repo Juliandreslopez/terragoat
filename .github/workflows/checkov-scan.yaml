@@ -1,0 +1,30 @@
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+name: EKS - Build, Scan and Deploy
+
+jobs:
+  deploy:
+    name: EKS - Build, Scan and Deploy
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      
+    
+    - name: Prisma Cloud Code Security Scan
+      id: checkov
+      uses: bridgecrewio/checkov-action@master
+      env:
+        PRISMA_API_URL: ${{ secrets.PCCS_CONSOLE_URL }}
+      with:
+        api-key: ${{ secrets.PCC_USER }}::${{ secrets.PCC_PASS }}
+        use_enforcement_rules: true
