@@ -31,6 +31,7 @@ jobs:
         output: junitxml
         output_file_path: checkov_report.xml # Name of the JUnit XML report file
     - name: Upload Checkov Report
+      if: always()
       uses: actions/upload-artifact@v4
       with:
         name: checkov-junit-report
