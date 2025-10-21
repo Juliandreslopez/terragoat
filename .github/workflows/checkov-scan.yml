@@ -20,14 +20,22 @@ jobs:
       uses: actions/checkout@v3
       
     
-    - name: Prisma Cloud Code Security Scan
+    # - name: Prisma Cloud Code Security Scan
+    #   id: checkov
+    #   uses: bridgecrewio/checkov-action@master
+    #   env:
+    #     PRISMA_API_URL: ${{ secrets.PCCS_CONSOLE_URL }}
+    #   with:
+    #     api-key: ${{ secrets.PCC_USER }}::${{ secrets.PCC_PASS }}
+    #     use_enforcement_rules: true
+
+    - name: Run Checkov and format JSON summary
       id: checkov
-      uses: bridgecrewio/checkov-action@master
-      env:
-        PRISMA_API_URL: ${{ secrets.PCCS_CONSOLE_URL }}
-      with:
-        api-key: ${{ secrets.PCC_USER }}::${{ secrets.PCC_PASS }}
-        use_enforcement_rules: true
-        output: sarif
-        output_file_path: checkov-results.sarif
-        upload-results: true
+      run: |
+        pip install jq checkov
+        checkov -d . --bc-api-key ${{ secrets.PCC_USER }}::${{ secrets.PCC_PASS }} --use-enforcement-rules --branch master --repo-id Juliandreslopez/terragoat --output json > checkov_report.json
+        echo "## 🛡️ Checkov Scan Summary" >> $GITHUB_STEP_SUMMARY
+        jq -r '
+          .summary | 
+          "✅ Passed: \(.passed)\n❌ Failed: \(.failed)\n⚠️ Skipped: \(.skipped)\n\nDetails:\n" 
+        ' checkov_report.json >> $GITHUB_STEP_SUMMARY
