@@ -27,7 +27,7 @@ jobs:
         PRISMA_API_URL: ${{ secrets.PCCS_CONSOLE_URL }}
       with:
         api-key: ${{ secrets.PCC_USER }}::${{ secrets.PCC_PASS }}
-        directory: terraform/azure
+        directory: terraform/aws
         use_enforcement_rules: true
         output_format: sarif
         output_file_path: checkov_report.sarif
