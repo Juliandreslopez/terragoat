@@ -28,6 +28,6 @@ jobs:
       with:
         api-key: ${{ secrets.PCC_USER }}::${{ secrets.PCC_PASS }}
         use_enforcement_rules: true
-        output: junitxml
-        output_file_path: checkov_report.xml # Name of the JUnit XML report file
+        output: sarif
+        output_file_path: checkov-results.sarif
         upload-results: true
