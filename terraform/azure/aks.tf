@@ -33,4 +33,5 @@ resource azurerm_kubernetes_cluster "k8s_cluster" {
     yor_trace            = "6103d111-864e-42e5-899c-1864de281fd1"
     yor_name             = "k8s_cluster"
   }
+  local_account_disabled = true
 }
