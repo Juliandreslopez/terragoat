@@ -29,14 +29,14 @@ jobs:
         api-key: ${{ secrets.PCC_USER }}::${{ secrets.PCC_PASS }}
         directory: terraform/aws
         use_enforcement_rules: true
-        output_format: json
-        output_file_path: checkov_report.json
+        output_format: sarif
+        output_file_path: checkov_report.sarif
         
     - name: Upload SARIF file to GitHub Code Scanning
       if: always()
       uses: github/codeql-action/upload-sarif@v3
       with:
-        sarif_file: checkov_report.json
+        sarif_file: checkov_report.sarif
 
     - name: Pipeline next steps
       run: echo "Next Steps execution"
