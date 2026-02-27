@@ -29,8 +29,8 @@ jobs:
         api-key: ${{ secrets.PCC_USER }}::${{ secrets.PCC_PASS }}
         directory: terraform/aws
         use_enforcement_rules: true
-        output_format: sarif
-        output_file_path: checkov_report.sarif
+        output_format: json
+        output_file_path: checkov_report.json
         
     - name: Upload SARIF file to GitHub Code Scanning
       if: always()
